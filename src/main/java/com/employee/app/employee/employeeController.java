@@ -3,10 +3,15 @@
  */
 package com.employee.app.employee;
 
-import java.util.Arrays;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -17,14 +22,34 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class employeeController {
+	@Autowired
+	private EmployeeService employeeService; 
+	
 	@GetMapping("/api/employees")
 	public List<Employee> getEmployees() {
-		return Arrays.asList(
-				new Employee(1, "Divay", 20000, 1, "Engineer","Cloud"),
-				new Employee(2, "Mohan", 50000, 1, "Engineer","Cloud"),
-				new Employee(3, "Rohan", 60000, 2, "Engineer","Cloud"),
-				new Employee(4, "Shekhar", 80000, 4, "Engineer","Cloud")
-				);
+		return employeeService.getAllTopics();
 	}
-
+	
+	@GetMapping("/api/employees/{id}")
+	public Employee getEmployee(@PathVariable int id) {
+		return employeeService.getEmployee(id);
+		
+	}
+	
+	@PostMapping("/api/employees")
+	public void addEmployee(@RequestBody Employee employee) {
+		employeeService.addEmployee(employee);
+	}
+	
+	@PutMapping("/api/employees/{id}")
+	public void updateEmployee(@PathVariable int id,@RequestBody Employee employee) {
+		employeeService.updateEmployee(employee,id);
+	}
+	
+	@DeleteMapping("/api/employees/{id}")
+	public void deleteEmployee(@PathVariable int id) {
+		employeeService.deleteEmployee(id);
+		
+	}
+	
 }
