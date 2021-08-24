@@ -4,6 +4,7 @@
 package com.employee.app.employee;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -31,7 +32,7 @@ public class employeeController {
 	}
 	
 	@GetMapping("/api/employees/{id}")
-	public Employee getEmployee(@PathVariable int id) {
+	public Optional<Employee> getEmployee(@PathVariable int id) {
 		return employeeService.getEmployee(id);
 		
 	}
